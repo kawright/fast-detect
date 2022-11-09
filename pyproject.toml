@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.urls]
-"GitHub Repository" = "https://github.com/kawright/fastdetect"
+"GitHub Repository" = "https://github.com/kawright/fast-detect"
 
 [project.scripts]
 fastdetect = "fastdetect:main"
