@@ -5,7 +5,11 @@ fastdetect - run a lightweight language detection server
 fastdetect bind_addr port model_path [--workers] [--cors]
     
 ## DESCRIPTION
-Run a lightweight language detection server.
+FastDetect is a lightweight language detection server that is capable of recognizing 175 languages using a data model trained on source text from Wikipedia, Tatoeba, and SETimes. It is powered by the Facebook developed `fastText` library, a uses `Bottle` and `gunicorn` to provide a REST-style interface in which to interact with the model.
+
+Please see https://fasttext.cc/ for more information.
+
+## OPTIONS
 
 ### `bind_addr`
 The IP address or hostname that this server process will bind to.
