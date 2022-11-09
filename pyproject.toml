@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fastdetect"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
     { name="Kristoffer A. Wright", email="kris.al.wright@gmail.com" },
 ]

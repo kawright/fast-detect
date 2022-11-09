@@ -1,3 +1,5 @@
+# `fastdetect` Manual Page
+
 ## NAME
 fastdetect - run a lightweight language detection server
     
@@ -93,3 +95,147 @@ Copyright (C) 2022 Kristoffer A. Wright
     
 This software is protected under the MIT license.
 Please see the LICENSE file for more information.
+
+---
+
+# Sample JSON Requests and Responses
+
+## Sample `POST /detectOne` Request Body
+
+```json
+{
+    "data": {
+        "utterance": "The man in black fled across the desert, and the gunslinger followed.",
+        "results": [
+            {
+                "detectedLanguage": "en",
+                "confidence": 0.9147520065307617
+            },
+            {
+                "detectedLanguage": "it",
+                "confidence": 0.01209554634988308
+            },
+            {
+                "detectedLanguage": "pt",
+                "confidence": 0.009296770207583904
+            }
+        ]
+    }
+}
+```
+
+## Sample `POST /detectOne` Response Body
+
+```json
+{
+    "data": {
+        "utterance": "The man in black fled across the desert, and the gunslinger followed.",
+        "results": [
+            {
+                "detectedLanguage": "en",
+                "confidence": 0.9147520065307617
+            },
+            {
+                "detectedLanguage": "it",
+                "confidence": 0.01209554634988308
+            },
+            {
+                "detectedLanguage": "pt",
+                "confidence": 0.009296770207583904
+            }
+        ]
+    }
+}
+```
+
+## Sample `POST /detectMany` Request Body
+
+```json
+{
+    "data": [
+        "The man in black fled across the desert, and the gunslinger followed.",
+        "Hola. Como estas?",
+        "Muž v černém uprchl přes poušť a pistolník ho následoval.",
+        "검은 옷을 입은 남자는 사막을 가로질러 도망쳤고 총잡이는 그 뒤를 따랐다."
+    ]
+}
+```
+
+## Sample `POST /detectMany` Response Body
+
+```json
+{
+    "data": [
+        {
+            "utterance": "The man in black fled across the desert, and the gunslinger followed.",
+            "results": [
+                {
+                    "detectedLanguage": "en",
+                    "confidence": 0.9147520065307617
+                },
+                {
+                    "detectedLanguage": "it",
+                    "confidence": 0.01209554634988308
+                },
+                {
+                    "detectedLanguage": "pt",
+                    "confidence": 0.009296770207583904
+                }
+            ]
+        },
+        {
+            "utterance": "Hola. Como estas?",
+            "results": [
+                {
+                    "detectedLanguage": "es",
+                    "confidence": 0.7752323746681213
+                },
+                {
+                    "detectedLanguage": "pt",
+                    "confidence": 0.20101742446422577
+                },
+                {
+                    "detectedLanguage": "gl",
+                    "confidence": 0.015422248281538486
+                }
+            ]
+        },
+        {
+            "utterance": "Muž v černém uprchl přes poušť a pistolník ho následoval.",
+            "results": [
+                {
+                    "detectedLanguage": "cs",
+                    "confidence": 0.9968787431716919
+                },
+                {
+                    "detectedLanguage": "en",
+                    "confidence": 0.0011031883768737316
+                },
+                {
+                    "detectedLanguage": "ro",
+                    "confidence": 0.0007685713935643435
+                }
+            ]
+        },
+        {
+            "utterance": "검은 옷을 입은 남자는 사막을 가로질러 도망쳤고 총잡이는 그 뒤를 따랐다.",
+            "results": [
+                {
+                    "detectedLanguage": "ko",
+                    "confidence": 1.0000699758529663
+                },
+                {
+                    "detectedLanguage": "tr",
+                    "confidence": 1.0000403563026339e-05
+                },
+                {
+                    "detectedLanguage": "en",
+                    "confidence": 1.0000098882301245e-05
+                }
+            ]
+        }
+    ]
+}
+
+```
+
