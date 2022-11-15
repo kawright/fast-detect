@@ -93,6 +93,8 @@ COPYRIGHT
 
 # Standard library:
 import argparse
+import datetime
+import os
 import sys
 from typing import List
 
@@ -176,6 +178,10 @@ def detect(utterance: str,
         "utterance": utterance,
         "results": []
     }
+    log = "[{}] [{}] [DETECTION] {}".format(
+        str(datetime.datetime.now()),
+        os.getpid(),
+        utterance)
     for i in range(len(prediction[0])):
         ret["results"].append(
             {
@@ -183,6 +189,8 @@ def detect(utterance: str,
                 "confidence": prediction[1][i]
             }
         )
+        log += " ({}/{})".format(prediction[0][i][9:], prediction[1][i])
+    print(log)
     return ret
 
 ################################################################################
@@ -354,7 +362,8 @@ def main() -> int:
     # Initialize the server:
     server_options = {
         "bind": "{}:{}".format(bind_address, listening_port),
-        "workers": worker_count
+        "workers": worker_count,
+        "accesslog": "-"
     }
     FastDetectServer(get_wsgi_app(), server_options).run()
     
