@@ -7,7 +7,7 @@ fastdetect - run a lightweight language detection server
 fastdetect bind_addr port model_path [--workers] [--cors]
     
 ## DESCRIPTION
-FastDetect is a lightweight language detection server that is capable of recognizing 175 languages using a data model trained on source text from Wikipedia, Tatoeba, and SETimes. It is powered by the Facebook developed `fastText` library, a uses `Bottle` and `gunicorn` to provide a REST-style interface in which to interact with the model.
+FastDetect is a lightweight language detection server that is capable of recognizing 175 languages using a data model trained on source text from Wikipedia, Tatoeba, and SETimes. It is powered by the Facebook developed `fastText` library, and uses `Bottle` with `gunicorn` to provide a REST-style interface in which to interact with the model.
 
 Please see https://fasttext.cc/ for more information.
 
@@ -35,6 +35,11 @@ character ('*'). Note that if this is omitted, CORS will not be
 supported, and all preflight requests will receive a 400 error.
         
 ## ENDPOINTS
+
+### `XYZ /`
+Unconditionally serves 200 with an empty response body. Used primarily for
+performing health checks on the server. `XYZ` may be any canonical HTTP request
+method.
 
 ### `OPTIONS /detectOne`
 Preflighting for `POST /detectOne` endpoint.
@@ -104,23 +109,7 @@ Please see the LICENSE file for more information.
 
 ```json
 {
-    "data": {
-        "utterance": "The man in black fled across the desert, and the gunslinger followed.",
-        "results": [
-            {
-                "detectedLanguage": "en",
-                "confidence": 0.9147520065307617
-            },
-            {
-                "detectedLanguage": "it",
-                "confidence": 0.01209554634988308
-            },
-            {
-                "detectedLanguage": "pt",
-                "confidence": 0.009296770207583904
-            }
-        ]
-    }
+    "data": "The man in black fled across the desert, and the gunslinger followed."
 }
 ```
 

@@ -35,6 +35,10 @@ OPTIONS
         supported, and all preflight requests will receive a 400 error.
         
 ENDPOINTS
+    XYZ /
+        Unconditionally serves 200 with an empty response body. Used primarily 
+        for performing health checks on the server. 'XYZ' may be any canonical 
+        HTTP request method.
     OPTIONS /detectOne
         Preflighting for 'POST /detectOne' endpoint.
     POST /detectOne
@@ -197,6 +201,15 @@ def detect(utterance: str,
 # WSGI application #############################################################
 ################################################################################
 
+def health_check_route() -> dict:
+    """
+    Route callback for the `XYZ /` endpoint where `XYZ` is one of "GET", "POST",
+    "OPTIONS", "HEAD", "PUT", "PATCH", "DELETE", "CONNECT", or "TRACE".
+    Unconditionally serves 200, and is primarily used for health checks. Also
+    serve
+    """
+    return
+
 def detect_one_route() -> dict:
     """
     Route callback for the `POST /detectOne` endpoint. Detects the language of
@@ -205,9 +218,9 @@ def detect_one_route() -> dict:
     
     # Validate input:
     try:
-        utterance = str(bottle.request.json["data"])
+        utterance = str(bottle.request.json["data"])           
         predictions = int(bottle.request.json["predictions"]) \
-            if ("predictions" in bottle.request.json) else 1
+            if ("predictions" in bottle.request.json) else 1   
     except Exception:
         bottle.response.status = 400
         return {
@@ -307,6 +320,14 @@ def get_wsgi_app() -> bottle.Bottle:
     application = bottle.Bottle()
     
     # Configure routes:
+    application.route("/", "GET", health_check_route)
+    application.route("/", "POST", health_check_route)
+    application.route("/", "PUT", health_check_route)
+    application.route("/", "PATCH", health_check_route)
+    application.route("/", "DELETE", health_check_route)
+    application.route("/", "TRACE", health_check_route)
+    application.route("/", "OPTIONS", health_check_route)
+    application.route("/", "HEAD", health_check_route)
     application.route("/detectOne", "OPTIONS", preflight_route)
     application.route("/detectOne", "POST", detect_one_route)
     application.route("/detectMany", "OPTIONS", preflight_route)
