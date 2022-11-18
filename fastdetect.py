@@ -218,7 +218,10 @@ def detect_one_route() -> dict:
     
     # Validate input:
     try:
-        utterance = str(bottle.request.json["data"])           
+        utterance = str(bottle.request.json["data"]) \
+            .replace("\n", "") \
+            .replace("\t", "") \
+            .replace("\r", "") 
         predictions = int(bottle.request.json["predictions"]) \
             if ("predictions" in bottle.request.json) else 1   
     except Exception:
@@ -257,7 +260,11 @@ def detect_many_route() -> dict:
         
     ret = []
     for utterance in utterances:
-        ret.append(detect(utterance, predictions))
+        clean_utterance = utterance \
+            .replace("\n", "") \
+            .replace("\t", "") \
+            .replace("\r", "") 
+        ret.append(detect(clean_utterance, predictions))
         
     if CORS_DOMAIN is not None:
         bottle.response.add_header("Access-Control-Allow-Origin", CORS_DOMAIN)
